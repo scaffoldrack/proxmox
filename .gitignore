@@ -1,0 +1,150 @@
+# scaffoldrack/proxmox — .gitignore
+#
+# Proxmox provisioning via Terraform + Ansible, cloud-init templates,
+# Talos config generation.
+
+# ─────────────────────────────────────────────────────────
+# Terraform — CRITICAL, never commit state or tfvars
+# ─────────────────────────────────────────────────────────
+
+# Terraform working directory and plugins
+.terraform/
+.terraform.lock.hcl
+
+# State files — ABSOLUTELY never commit these
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Plan files — never commit, they're build artifacts
+*.tfplan
+plan.out
+plan.json
+
+# Variable files with real values (keep .example committed)
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+!*.tfvars.json.example
+
+# Override files are for local-only customization
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Crash logs
+crash.log
+crash.*.log
+
+# ─────────────────────────────────────────────────────────
+# Ansible
+# ─────────────────────────────────────────────────────────
+
+# Retry files
+*.retry
+
+# Real inventory (keep .example committed)
+inventory/hosts.real
+inventory/production
+host_vars/*.real
+group_vars/*.real
+
+# Vault-encrypted files are committable; plaintext decrypted copies aren't
+*.vault.yml.decrypted
+*.decrypted
+
+# ─────────────────────────────────────────────────────────
+# Talos / cloud-init
+# ─────────────────────────────────────────────────────────
+
+# Generated Talos configs often contain secrets
+talosconfig
+*.talosconfig
+controlplane.yaml
+worker.yaml
+# Keep .example/template versions
+!controlplane.yaml.example
+!worker.yaml.example
+!*.tmpl
+
+# Cloud-init user-data with real secrets
+user-data.real
+meta-data.real
+
+# ─────────────────────────────────────────────────────────
+# Workspace
+# ─────────────────────────────────────────────────────────
+tmp/*
+!tmp/.gitkeep
+
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# ISO files (large; don't commit)
+*.iso
+
+# ─────────────────────────────────────────────────────────
+# Secrets
+# ─────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+credentials
+credentials.json
+
+# Proxmox API tokens
+proxmox.token
+.proxmox
+
+# ─────────────────────────────────────────────────────────
+# OS junk
+# ─────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.directory
+.Trash-*
+
+# ─────────────────────────────────────────────────────────
+# Editors and IDEs
+# ─────────────────────────────────────────────────────────
+.vscode/
+*.code-workspace
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+Session.vim
+
+# ─────────────────────────────────────────────────────────
+# Backups and temp files
+# ─────────────────────────────────────────────────────────
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+
+# Logs
+logs/
+*.log
